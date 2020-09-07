@@ -10,19 +10,3 @@ public class ForumApplication {
 		SpringApplication.run(ForumApplication.class, args);
 	}
 }
-
-
-
-
-
-
-//@SpringBootApplication(scanBasePackages ="com.iiht.forum")
-//@EnableJpaRepositories(basePackages ="com.iiht.forum.repository")
-//@EntityScan("com.iiht.forum.model")
-
-
-/*
- * @Bean public RestTemplate getRestTemplate() { return new RestTemplate(); }
- * 
- * @Bean public ModelMapper modelMapper() { return new ModelMapper(); }
- */

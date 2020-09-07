@@ -33,9 +33,6 @@ public class TestPostRepository {
 
         VisitorPosts posts = repository.findPostById((long)10);
         
-        //assertEquals("10", posts.getId());
-        //assertThat(posts).extracting(posts.getTitle()).isEqualTo("Cooking");
-        
 	    yakshaAssert(currentTest(), (posts != null ? true : false), businessTestFile);	    
     }
 }

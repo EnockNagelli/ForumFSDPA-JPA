@@ -7,7 +7,6 @@ import static com.iiht.forum.UtilTestClass.TestUtils.businessTestFile;
 import static com.iiht.forum.UtilTestClass.TestUtils.currentTest;
 import static com.iiht.forum.UtilTestClass.TestUtils.yakshaAssert;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,31 +17,22 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.util.CollectionUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.CollectionUtils;
 
 import com.iiht.forum.UtilTestClass.JSONUtils;
 import com.iiht.forum.UtilTestClass.MasterData;
@@ -52,11 +42,6 @@ import com.iiht.forum.dto.VisitorCommentsDto;
 import com.iiht.forum.dto.VisitorPostsDto;
 import com.iiht.forum.service.CommentService;
 import com.iiht.forum.service.PostService;
-
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT, classes = VisitorPostController.class)
-//@AutoConfigureMockMvc
-//@AutoConfigureTestDatabase(replace=Replace.NONE)
 
 @WebMvcTest({ VisitorPostController.class, VisitorCommentController.class})
 @RunWith(SpringRunner.class)
@@ -83,7 +68,6 @@ public class TestController
 	 */
 	@Before public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		//this.mockMvc = MockMvcBuilders.standaloneSetup(visitorPostController).build(); 
 	}  
 	//=======================================================================================================
 	//							I - Visitor Post Test
@@ -94,22 +78,20 @@ public class TestController
 	 * Description : This test is to perform add new post in the Forum
 	 */
 	@Test 
-	public void testAddPost() throws Exception { 
-		/*
-		 * VisitorPostsDto postDto = JSONUtils.createPostDto((long)4, "Foot Ball",
-		 * "Field Game", "World Sport. Great Sport"); Boolean responseEntity =
-		 * visitorPostController.saveUpdate(postDto, null); yakshaAssert(currentTest(),
-		 * (responseEntity ? true : false), businessTestFile);
-		 */
-        //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	public void testAddPost() throws Exception 
+	{ 
         VisitorPostsDto postdto = MasterData.getPostDtoDetails();
-		Mockito.when(postService.saveUpdate(postdto)).thenReturn(postdto);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/post/addPost")
+	
+        Mockito.when(postService.saveUpdate(postdto)).thenReturn(postdto);
+		
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/post/addPost")
 				.content(MasterData.asJsonString(postdto))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		System.out.println(result.getResponse().getContentAsString());
+		
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		
+        System.out.println(result.getResponse().getContentAsString());
 		System.out.println(postdto);
 		yakshaAssert(currentTest(),	result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(postdto))? true : false, businessTestFile);
 	}
@@ -118,7 +100,9 @@ public class TestController
 	public void testAddPostBDD() throws Exception 
 	{
 		final int count[] = new int[1];
+		
 		VisitorPostsDto postDto = MasterData.getPostDtoDetails();
+		
 		Mockito.when(postService.saveUpdate(postDto)).then(new Answer<VisitorPostsDto>() {
 			@Override
 			public VisitorPostsDto answer(InvocationOnMock invocation) throws Throwable {
@@ -128,11 +112,14 @@ public class TestController
 				return postDto;
 			}
 		});
+		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/post/addPost")
 				.content(MasterData.asJsonString(postDto))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);	
+		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		
 		System.out.println(result.getResponse().getContentAsString());
 		System.out.println(count[0]);
 		yakshaAssert(currentTest(), count[0] == 1 ? true : false, businessTestFile);
@@ -245,32 +232,8 @@ public class TestController
 	 * Description : This test is to perform view all the posts from database
 	 */
 	@Test 
-	public void testFindAllPosts() throws Exception { 
-        // Given input
-		/*
-		 * VisitorPostsDto post1 = JSONUtils.createPostDto((long) 6, "Kabbadi",
-		 * "India Sport", "Good Sport. Propularly played by all eastern countries.");
-		 * VisitorPostsDto post2 = JSONUtils.createPostDto((long) 7, "Ko Ko",
-		 * "India Sport", "Good Sport. Propularly played by all states in India.");
-		 * VisitorPostsDto post3 = JSONUtils.createPostDto((long) 8, "Chess",
-		 * "World Sport", "Great Sport. Propularly played by all countries.");
-		 * List<VisitorPostsDto> list = new ArrayList<VisitorPostsDto>();
-		 * list.add(post1); list.add(post2); list.add(post3); // when
-		 * Mockito.when(postService.getAllPosts()).thenReturn(list);
-		 * List<VisitorPostsDto> fromController = postService.getAllPosts(); // then
-		 * assertThat(fromController.size()).isEqualTo(3);
-		 * assertThat(fromController.get(0).getTitle()).isEqualTo(post1.getTitle());
-		 * assertThat(fromController.get(0).getTags()).isEqualTo(post1.getTags());
-		 * assertThat(fromController.get(0).getPostDescription()).isEqualTo(post1.
-		 * getPostDescription());
-		 * 
-		 * assertThat(fromController.get(0).getTitle()).isEqualTo(post1.getTitle());
-		 * assertThat(fromController.get(1).getTags()).isEqualTo(post2.getTags());
-		 * assertThat(fromController.get(2).getPostDescription()).isEqualTo(post3.
-		 * getPostDescription()); yakshaAssert(currentTest(), (fromController.size() ==
-		 * 3 ? true : false), businessTestFile);
-		 */
-		//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	public void testFindAllPosts() throws Exception 
+	{ 
 		List<VisitorPostsDto> list = new ArrayList<VisitorPostsDto>();
 		list.add(MasterData.getPostDtoDetails());
 		
@@ -293,13 +256,16 @@ public class TestController
 	 * Description : This test is to perform check the null operation against view all posts operation
 	 */
 	@Test 
-	public void testViewAllPostsCase() throws Exception {
+	public void testViewAllPostsCase() throws Exception 
+	{
  		List<VisitorPostsDto> list = new ArrayList<VisitorPostsDto>();
-		when(postService.getAllPosts()).thenReturn(list);
-        // when
-        List<VisitorPostsDto> fromController = postService.getAllPosts();
-        // then
-        assertThat(fromController.size()).isEqualTo(0);
+	
+ 		Mockito.when(postService.getAllPosts()).thenReturn(list);
+        
+ 		List<VisitorPostsDto> fromController = postService.getAllPosts();
+
+ 		assertThat(fromController.size()).isEqualTo(0);
+ 		
 		yakshaAssert(currentTest(), (fromController.size() == 0 ? true : false) ? true : false, businessTestFile); 
 	}
 
@@ -310,32 +276,42 @@ public class TestController
 	 * Description : This test is to perform to view all the discussions of the posts
 	 */
 	@Test 
-	public void testFindAllDiscussions() throws Exception { 
+	public void testFindAllDiscussions() throws Exception 
+	{ 
 	    // Given input
 		VisitorPostsDto post1 = JSONUtils.createPostDto((long) 6, "Kabbadi", "India Sport", "Good Sport. Propularly played by all eastern countries.");
 		VisitorPostsDto post2 = JSONUtils.createPostDto((long) 7, "Ko Ko", "India Sport", "Good Sport. Propularly played by all states in India.");
 		VisitorPostsDto post3 = JSONUtils.createPostDto((long) 8, "Chess", "World Sport", "Great Sport. Propularly played by all countries.");
+		
 	    List<VisitorPostsDto> list = new ArrayList<VisitorPostsDto>();
 	    list.add(post1);
 	    list.add(post2);
 	    list.add(post3);
+	 
 	    HashMap<Long, String> discussion = new HashMap<Long, String>();
-		if(!CollectionUtils.isEmpty(list)) {
+		
+	    if(!CollectionUtils.isEmpty(list)) {
 			for(VisitorPostsDto p : list) {
 				discussion.put(p.getPostId(), p.getTitle());
 			}
 		}
+	    
 	    // when
 	    Mockito.when(postService.getAllPosts()).thenReturn(list);
+	    
 	    Map<Long, String> fromController = (Map<Long, String>) visitorPostController.getAllDiscussions().getBody();
+	    
 	    assertThat(fromController.size()).isEqualTo(0);
+	    
 	    Set<Long> s = fromController.keySet();
+	    
 	    Iterator<Long> it = s.iterator();
+	    
 	    while(it.hasNext()) {
 	    	System.out.println("Value : "+it.next());
-	    }	    
+	    }  
 	    yakshaAssert(currentTest(), (fromController.size() == 3 ? true : false), businessTestFile);
-	}	
+	}
 	
 	//=======================================================================================================
 	//				II - Visitor Comments Tests
@@ -346,11 +322,8 @@ public class TestController
 	 * Description : This test is to perform add a comment and check the status of the operation
 	 */
 	@Test
-	public void testAddComments() throws Exception {
-//		VisitorCommentsDto commentDto = JSONUtils.createCommentDto((long) 4, (long) 5, "Field Game", "I like this sport");
-//		Boolean responseEntity = visitorCommentController.saveUpdate(commentDto);
-//      yakshaAssert(currentTest(), (responseEntity ? true : false), businessTestFile);
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	public void testAddComments() throws Exception 
+	{
 	    VisitorCommentsDto commentDto = MasterData.getCommentDtoDetails();
 	    
 		Mockito.when(commentService.saveUpdate(commentDto)).thenReturn(commentDto);

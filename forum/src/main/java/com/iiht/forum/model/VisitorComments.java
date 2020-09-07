@@ -31,7 +31,4 @@ public class VisitorComments
 	
 	@Column(name = "comment")
 	private String visitorComment;
-	
-	//@OneToMany(mappedBy="VistiorPosts",cascade=CascadeType.PERSIST)
-	//private List<VisitorPosts> posts;
 }

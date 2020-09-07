@@ -16,12 +16,12 @@ import com.iiht.forum.model.VisitorPosts;
 import com.iiht.forum.repository.PostRepository;
 
 @Service
+@Transactional
 public class PostService {
 	
 	@Autowired
 	private PostRepository repository; 
 	//--------------------------------------------------------------------------------------------------
-	@Transactional
 	public VisitorPostsDto saveUpdate(VisitorPostsDto postDtoInput)
 	{
 		VisitorPosts posts = new VisitorPosts();

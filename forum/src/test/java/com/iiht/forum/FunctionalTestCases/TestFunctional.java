@@ -69,10 +69,6 @@ public class TestFunctional
 	@Test
 	public void testViewAllComments() throws Exception
 	{
-		//List<VisitorCommentsDto> list = new ArrayList<VisitorCommentsDto>();
-		//list.add(new VisitorCommentsDto());
-		//list.add(new VisitorCommentsDto());
-	    
 		VisitorCommentsDto vComment = new VisitorCommentsDto();
 		
 	    when(commentService.getCommentById((long)1)).thenReturn(vComment);

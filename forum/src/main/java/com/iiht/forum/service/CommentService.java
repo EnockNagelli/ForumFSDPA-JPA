@@ -14,13 +14,13 @@ import com.iiht.forum.model.VisitorComments;
 import com.iiht.forum.repository.CommentRepository;
 
 @Service
+@Transactional
 public class CommentService 
 {
 	@Autowired
 	private CommentRepository commentRepo; 
 	
 	//--------------------------------------------------------------------------------------------------------------------------------
-	@Transactional
 	public VisitorCommentsDto saveUpdate(VisitorCommentsDto commentDtoInput)
 	{
 		VisitorComments comments = new VisitorComments();
