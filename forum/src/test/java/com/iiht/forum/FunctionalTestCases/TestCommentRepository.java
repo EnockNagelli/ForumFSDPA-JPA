@@ -33,13 +33,9 @@ public class TestCommentRepository {
     public void testCommentRepository() throws Exception
     {
 		VisitorComments vc = MasterData.getCommentDetails();
-		
 		Mockito.when(repository.save(vc)).thenReturn(vc);
-				
 		//Mockito.when(repository.save(any(VisitorComments.class))).thenReturn(new VisitorComments());
-
-        VisitorCommentsDto posts = commentService.getCommentById((long)101);
-               
+        VisitorCommentsDto posts = commentService.getCommentById((long)101);      
 	    yakshaAssert(currentTest(), (posts != null ? true : false), businessTestFile);	    
     }
 }

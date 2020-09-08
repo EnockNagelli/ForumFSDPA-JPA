@@ -33,13 +33,9 @@ public class TestPostRepository {
     public void testPostRepository() throws Exception
     {
 		VisitorPosts vc = MasterData.getPostDetails();
-		
 		Mockito.when(repository.save(vc)).thenReturn(vc);
-				
-		//Mockito.when(repository.save(any(VisitorComments.class))).thenReturn(new VisitorComments());
-
-		VisitorPostsDto posts = postService.getPostById((long)101);
-        
+		//Mockito.when(repository.save(any(VisitorPosts.class))).thenReturn(new VisitorPosts());
+		VisitorPostsDto posts = postService.getPostById((long)101);        
 	    yakshaAssert(currentTest(), (posts != null ? true : false), businessTestFile);	    
     }
 }

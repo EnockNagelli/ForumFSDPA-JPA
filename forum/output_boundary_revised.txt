@@ -1,0 +1,10 @@
+
+testPostSuccess=true
+testVisitorCommentsLength=false
+testPostDescriptionLength=false
+testCommentFailed=false
+testPostFailed=false
+testCommentTagsLength=false
+testCommentSuccess=true
+testPostTagsLength=false
+testPostTitleLength=false
