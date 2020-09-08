@@ -10,8 +10,8 @@ import com.iiht.forum.model.VisitorPosts;
 public interface PostRepository extends JpaRepository<VisitorPosts, Long>
 {
 	@Query("select vp FROM VisitorPosts vp")
-	List<VisitorPosts> findAllPosts();
+	public List<VisitorPosts> findAllPosts();
 	
 	@Query("select vp FROM VisitorPosts vp WHERE vp.postId=?1")
-	VisitorPosts findPostById(Long postId);
+	public VisitorPosts findPostById(Long postId);
 }

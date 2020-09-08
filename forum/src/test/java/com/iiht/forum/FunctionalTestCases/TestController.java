@@ -68,7 +68,8 @@ public class TestController
 	 */
 	@Before public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-	}  
+	}
+	
 	//=======================================================================================================
 	//							I - Visitor Post Test
 	//=======================================================================================================
@@ -296,7 +297,6 @@ public class TestController
 			}
 		}
 	    
-	    // when
 	    Mockito.when(postService.getAllPosts()).thenReturn(list);
 	    
 	    Map<Long, String> fromController = (Map<Long, String>) visitorPostController.getAllDiscussions().getBody();

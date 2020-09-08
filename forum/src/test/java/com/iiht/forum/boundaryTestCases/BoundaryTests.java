@@ -17,6 +17,7 @@ import javax.validation.ValidatorFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.iiht.forum.UtilTestClass.MasterData;
 import com.iiht.forum.dto.VisitorCommentsDto;
@@ -25,6 +26,7 @@ import com.iiht.forum.dto.VisitorPostsDto;
 // As many validation as constraints on each field
 public class BoundaryTests {
 
+	@Autowired
 	private Validator validator;
 	
 	//---------------------------------------------------------------------------------------------
@@ -34,7 +36,7 @@ public class BoundaryTests {
 		validator = factory.getValidator();
 	}
 	//---------------------------------------------------------------------------------------------
-	//			1. VisitorPostsDto
+	//			1. VisitorPostsDto - Properties length validation
 	//---------------------------------------------------------------------------------------------
 	@Test
 	public void testPostTitleLength() throws Exception {
@@ -60,7 +62,7 @@ public class BoundaryTests {
 		yakshaAssert(currentTest(),!violations.isEmpty()? true : false,boundaryTestFile);		
 	}
 	//---------------------------------------------------------------------------------------------
-	//			2. VisitorCommentsDto
+	//			2. VisitorCommentsDto - Properties length validation
 	//---------------------------------------------------------------------------------------------
 	@Test
 	public void testCommentTagsLength() throws Exception {

@@ -10,8 +10,8 @@ import com.iiht.forum.model.VisitorComments;
 public interface CommentRepository extends JpaRepository<VisitorComments, Long>
 {
 	@Query("select vp FROM VisitorComments vp")
-	List<VisitorComments> findAllComments();
+	public List<VisitorComments> findAllComments();
 	
 	@Query("select vp FROM VisitorComments vp WHERE vp.postId=?1")
-	VisitorComments findVisitorById(Long postId);
+	public VisitorComments findVisitorById(Long postId);
 }
