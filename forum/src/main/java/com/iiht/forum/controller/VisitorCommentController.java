@@ -31,7 +31,7 @@ public class VisitorCommentController
 	private CommentService commentService;
 	
 	//------------------------------------------------------------------------------------------------
-	//			COMMENT SERVICE - REST END POINTS
+	//			COMMENT SERVICE - REST END POINTS - 4
 	//------------------------------------------------------------------------------------------------
 	@PostMapping(value="/addComment")
 	public ResponseEntity<VisitorCommentsDto> saveUpdate(@Valid @RequestBody VisitorCommentsDto visitorCommentsDto, BindingResult bindingResult) 
@@ -67,7 +67,7 @@ public class VisitorCommentController
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	//			UTITLITY EXCEPTION HANDLERS
+	//			UTITLITY EXCEPTION HANDLERS - 2
 	//------------------------------------------------------------------------------------------------
 	@ExceptionHandler(CommentException.class)
 	public ResponseEntity<CommentExceptionResponse> commentHandler(CommentException ex) {

@@ -35,10 +35,11 @@ public class VisitorPostController {
 	public String home() {
 		return "Welcome to Online Forum Application...";
 	}
+
+	//================================================================================================
+	//			POST SERVICE - REST END POINTS - 5
 	//------------------------------------------------------------------------------------------------
-	//			POST SERVICE - REST END POINTS
-	//------------------------------------------------------------------------------------------------
-	@PostMapping(value="/addPost")								 // TestCases : 2 - Exception Test : 1 
+	@PostMapping(value = "/addPost")								 // TestCases : 2 - Exception Test : 1 
 	public ResponseEntity<VisitorPostsDto> addPost(@Valid @RequestBody VisitorPostsDto visitorPostsDto, BindingResult bindingResult)
 	{
 		if (bindingResult.hasErrors())
@@ -56,7 +57,7 @@ public class VisitorPostController {
 			return new ResponseEntity<VisitorPostsDto>(postService.deletePostById(postId), HttpStatus.OK);
 	}	
 	//------------------------------------------------------------------------------------------------
-	@GetMapping(value = "/getPostById/{postId}")
+	@GetMapping(value = "/getPostById/{postId}")				 // TestCases : 2 - Exception Test : 1
 	public ResponseEntity<VisitorPostsDto> getVisitorByPostId(@PathVariable("postId") Long postId)
 	{
 		if(postService.getPostById(postId) == null)
@@ -76,18 +77,19 @@ public class VisitorPostController {
 	{
 		return new ResponseEntity<Map<Long, String>>(postService.getAllDiscussions(), HttpStatus.OK);
 	}
-	//------------------------------------------------------------------------------------------------
-	//			UTITLITY EXCEPTION HANDLERS
+	
+	//================================================================================================
+	//			UTITLITY EXCEPTION HANDLERS - 2
 	//------------------------------------------------------------------------------------------------
 	@ExceptionHandler(PostException.class)
-	public ResponseEntity<PostExceptionResponse> NotesHandler(PostException ex) {
+	public ResponseEntity<PostExceptionResponse> PostHandler(PostException ex) {
 		PostExceptionResponse resp = new PostExceptionResponse(ex.getMessage(),System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value());
 		ResponseEntity<PostExceptionResponse> response = new ResponseEntity<PostExceptionResponse>(resp, HttpStatus.BAD_REQUEST);
 		return response;
 	}
 	//------------------------------------------------------------------------------------------------
 	@ExceptionHandler(PostNotFoundException.class)
-	public ResponseEntity<PostExceptionResponse> NotesHandler(PostNotFoundException ex){
+	public ResponseEntity<PostExceptionResponse> PostHandler(PostNotFoundException ex){
 		PostExceptionResponse resp = new PostExceptionResponse(ex.getMessage(),System.currentTimeMillis(), HttpStatus.NOT_FOUND.value());
 		ResponseEntity<PostExceptionResponse> response = new ResponseEntity<PostExceptionResponse>(resp, HttpStatus.NOT_FOUND);
 		return response;
