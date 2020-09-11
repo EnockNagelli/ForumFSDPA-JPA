@@ -25,71 +25,52 @@ import com.iiht.forum.exception.PostNotFoundException;
 import com.iiht.forum.service.PostService;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/visitorPost")
 public class VisitorPostController {
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private PostService postService;
 
-	@RequestMapping("/")
+	@RequestMapping("/home")
 	public String home() {
 		return "Welcome to Online Forum Application...";
 	}
 
-	//================================================================================================
-	//			POST SERVICE - REST END POINTS - 5
-	//------------------------------------------------------------------------------------------------
-	@PostMapping(value = "/addPost")								 // TestCases : 2 - Exception Test : 1 
-	public ResponseEntity<VisitorPostsDto> addPost(@Valid @RequestBody VisitorPostsDto visitorPostsDto, BindingResult bindingResult)
-	{
-		if (bindingResult.hasErrors())
-           throw new PostException("Invalid Visitor Post Data!");
-		else
-			return new ResponseEntity<VisitorPostsDto>(postService.saveUpdate(visitorPostsDto), HttpStatus.OK);
+	@PostMapping(value = "/addPost") 
+	public ResponseEntity<VisitorPostsDto> addPost(@Valid @RequestBody VisitorPostsDto visitorPostsDto, BindingResult bindingResult) {
+		return null;
 	}
-	//------------------------------------------------------------------------------------------------
-	@DeleteMapping(value = "/delete/{postId}")					 // TestCases : 2 - Exception Test : 1 
-	public ResponseEntity<VisitorPostsDto> deleteVisitorPost(@PathVariable("postId") Long postId) 
-	{
-		if(postService.deletePostById(postId) == null)
-			throw new PostNotFoundException("Invalid PostId!! Please enter valid postId...");
-		else	
-			return new ResponseEntity<VisitorPostsDto>(postService.deletePostById(postId), HttpStatus.OK);
-	}	
-	//------------------------------------------------------------------------------------------------
-	@GetMapping(value = "/getPostById/{postId}")				 // TestCases : 2 - Exception Test : 1
-	public ResponseEntity<VisitorPostsDto> getVisitorByPostId(@PathVariable("postId") Long postId)
-	{
-		if(postService.getPostById(postId) == null)
-			throw new PostNotFoundException("Invalid PostId!! Please enter valid postId...");
-		else
-			return new ResponseEntity<VisitorPostsDto>(postService.getPostById(postId), HttpStatus.OK);
+
+	@DeleteMapping(value = "/delete/{postId}") 
+	public ResponseEntity<VisitorPostsDto> deleteVisitorPost(@PathVariable("postId") Long postId) {
+		return null;
 	}
-	//------------------------------------------------------------------------------------------------
+
+	@GetMapping(value = "/getPostById/{postId}")
+	public ResponseEntity<VisitorPostsDto> getVisitorByPostId(@PathVariable("postId") Long postId) {
+		return null;
+	}
+
 	@GetMapping(value = "/getAllPosts")
-	public ResponseEntity<List<VisitorPostsDto>> getAllVisitorPosts()
-	{
-		return new ResponseEntity<List<VisitorPostsDto>>(postService.getAllPosts(), HttpStatus.OK);
+	public ResponseEntity<List<VisitorPostsDto>> getAllVisitorPosts() {
+		return null;
 	}
-	//------------------------------------------------------------------------------------------------
+
 	@GetMapping(value = "/getDiscussionList")
-	public ResponseEntity<Map<Long, String>> getAllDiscussions() 
-	{
-		return new ResponseEntity<Map<Long, String>>(postService.getAllDiscussions(), HttpStatus.OK);
+	public ResponseEntity<Map<Long, String>> getAllDiscussions() {
+		return null;
 	}
 	
-	//================================================================================================
-	//			UTITLITY EXCEPTION HANDLERS - 2
-	//------------------------------------------------------------------------------------------------
 	@ExceptionHandler(PostException.class)
 	public ResponseEntity<PostExceptionResponse> PostHandler(PostException ex) {
 		PostExceptionResponse resp = new PostExceptionResponse(ex.getMessage(),System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value());
 		ResponseEntity<PostExceptionResponse> response = new ResponseEntity<PostExceptionResponse>(resp, HttpStatus.BAD_REQUEST);
 		return response;
 	}
-	//------------------------------------------------------------------------------------------------
+
 	@ExceptionHandler(PostNotFoundException.class)
-	public ResponseEntity<PostExceptionResponse> PostHandler(PostNotFoundException ex){
+	public ResponseEntity<PostExceptionResponse> PostHandler(PostNotFoundException ex) {
 		PostExceptionResponse resp = new PostExceptionResponse(ex.getMessage(),System.currentTimeMillis(), HttpStatus.NOT_FOUND.value());
 		ResponseEntity<PostExceptionResponse> response = new ResponseEntity<PostExceptionResponse>(resp, HttpStatus.NOT_FOUND);
 		return response;

@@ -27,43 +27,28 @@ import com.iiht.forum.service.CommentService;
 @RequestMapping(value="/comment")
 public class VisitorCommentController 
 {
+	@SuppressWarnings("unused")
 	@Autowired
 	private CommentService commentService;
-	
-	//------------------------------------------------------------------------------------------------
-	//			COMMENT SERVICE - REST END POINTS - 4
-	//------------------------------------------------------------------------------------------------
+
 	@PostMapping(value="/addComment")
-	public ResponseEntity<VisitorCommentsDto> saveUpdate(@Valid @RequestBody VisitorCommentsDto visitorCommentsDto, BindingResult bindingResult) 
-	{
-		if(bindingResult.hasErrors())
-			throw new CommentException("Invalid Visitor Comments!!");
-		else
-			return new ResponseEntity<VisitorCommentsDto>(commentService.saveUpdate(visitorCommentsDto), HttpStatus.OK);
+	public ResponseEntity<VisitorCommentsDto> saveUpdate(@Valid @RequestBody VisitorCommentsDto visitorCommentsDto, BindingResult bindingResult) {
+		return null;
 	}
-	//------------------------------------------------------------------------------------------------
+
 	@DeleteMapping(value = "/delete/{postId}")
-	public ResponseEntity<VisitorCommentsDto> deleteVisitorComment(@PathVariable("postId") Long postId) 
-	{
-		if(commentService.deleteCommentById(postId) == null)
-			throw new CommentNotFoundException("Invalid PostId!! Please enter valid postId...");
-		else	
-			return new ResponseEntity<VisitorCommentsDto>(commentService.deleteCommentById(postId), HttpStatus.OK);
+	public ResponseEntity<VisitorCommentsDto> deleteVisitorComment(@PathVariable("postId") Long postId) {
+		return null;
 	}	
 	//------------------------------------------------------------------------------------------------
 	@GetMapping(value = "/getCommentById/{postId}")
-	public ResponseEntity<VisitorCommentsDto> getVisitorByCommentId(@PathVariable Long postId) 
-	{
-		if(commentService.getCommentById(postId) == null)
-			throw new CommentNotFoundException("Invalid PostId!! Please enter valid postId...");
-		else	
-			return new ResponseEntity<VisitorCommentsDto>(commentService.getCommentById(postId), HttpStatus.OK);		
+	public ResponseEntity<VisitorCommentsDto> getVisitorByCommentId(@PathVariable Long postId) {
+		return null;
 	}
 	//------------------------------------------------------------------------------------------------
 	@GetMapping(value = "/getAllComments")
-	public ResponseEntity<List<VisitorCommentsDto>> getAllVisitorComments()
-	{
-		return new ResponseEntity<List<VisitorCommentsDto>>(commentService.getAllComments(), HttpStatus.OK);
+	public ResponseEntity<List<VisitorCommentsDto>> getAllVisitorComments() {
+		return null;
 	}
 	
 	//------------------------------------------------------------------------------------------------
